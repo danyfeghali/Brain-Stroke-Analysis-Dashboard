@@ -247,36 +247,36 @@ with tab2:
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
 
-    #with st.container():
-        # # Create treemap for smoking status and stroke 
-        # proportions_df = df.groupby(['stroke', 'smoking_status']).size().groupby(level=0).apply(lambda x: 100 * x / x.sum()).reset_index() # Create a DataFrame to store the proportions
-        
-        # proportions_df.columns = ['stroke', 'smoking_status', 'proportion']       
-        # proportions_df['values'] = proportions_df['proportion'] # Set 'proportion' as values
+    with st.container():
+        # Create treemap for smoking status and stroke 
+        proportions_df = df.groupby(['stroke', 'smoking_status']).size().groupby(level=0).apply(lambda x: 100 * x / x.sum()).reset_index(name='proportion')
 
-        # proportions_df['stroke'] = proportions_df['stroke'].map({0: 'No Stroke', 1: 'Stroke'})  # Map 0 and 1 to 'No Stroke' and 'Stroke'
+        proportions_df.columns = ['stroke', 'smoking_status', 'proportion']       
+        proportions_df['values'] = proportions_df['proportion'] # Set 'proportion' as values
 
-        # fig = px.treemap(proportions_df, path=['stroke', 'smoking_status'], 
-        #                 values='values', 
-        #                 color='proportion',
-        #                 color_continuous_scale=px.colors.qualitative.Set1,  # Change color scale to different shades of blue
-        #                 title='<b>Treemap of Smoking Proportions within Stroke and Non-Stroke Patients</b>',
-        #                 hover_data=['proportion'])  # Include proportion data in the hover data
+        proportions_df['stroke'] = proportions_df['stroke'].map({0: 'No Stroke', 1: 'Stroke'})  # Map 0 and 1 to 'No Stroke' and 'Stroke'
 
-        # fig.update_traces(texttemplate='%{label}<br>%{customdata[0]:.2f}%', textfont_size=20)
+        fig = px.treemap(proportions_df, path=['stroke', 'smoking_status'], 
+                        values='values', 
+                        color='proportion',
+                        color_continuous_scale=px.colors.qualitative.Set1,  # Change color scale to different shades of blue
+                        title='<b>Treemap of Smoking Proportions within Stroke and Non-Stroke Patients</b>',
+                        hover_data=['proportion'])  # Include proportion data in the hover data
 
-        # fig.update_layout(
-        # title={
-        #     'text': '<b>Treemap of Smoking Proportions within Stroke and Non-Stroke Patients</b>',
-        #     'y':0.95,
-        #     'x':0.5,
-        #     'xanchor': 'center',
-        #     'yanchor': 'top',
-        #     'font':dict(size=18)
-        #     }
-        # )
-        # # Show the figure
-        # st.plotly_chart(fig, use_container_width=True)
+        fig.update_traces(texttemplate='%{label}<br>%{customdata[0]:.2f}%', textfont_size=20)
+
+        fig.update_layout(
+            title={
+                'text': '<b>Treemap of Smoking Proportions within Stroke and Non-Stroke Patients</b>',
+                'y':0.95,
+                'x':0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font':dict(size=18)
+                }
+            )
+        # Show the figure
+        st.plotly_chart(fig, use_container_width=True)
 
     with st.container():
         st.markdown("<hr style='border: 1px solid black'>", unsafe_allow_html=True)
