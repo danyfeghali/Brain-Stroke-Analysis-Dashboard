@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 # Load the data
-df = pd.read_csv('healthcare-dataset-stroke-data.csv')
+df = pd.read_csv('./healthcare-dataset-stroke-data.csv')
 
 # Set page config
 st.set_page_config(
@@ -20,15 +20,16 @@ width = 400
 # # Title
 # st.markdown("""<div style='background-color: lightblue;'><p style='color: black; font-size: 35px; font-weight: bold; text-align: center;'>
 # Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
+
+# Title
+
 st.markdown("""<div style='display: flex; justify-content: space-between; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 with col1:
-    st.image('strokegraphic.jpg')
+    st.image('./strokegraphic.jpg')
 with col2:
-    st.image('Stroke.png')  
-
-# Title
+    st.image('./Stroke.png')
 
 st.write("""Welcome to the Brain Stroke Risk Analysis Dashboard! This interactive tool allows you to explore a dataset of patients with and without stroke, 
 with the aim of identifying key risk factors and trends.""")
