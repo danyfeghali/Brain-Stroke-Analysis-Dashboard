@@ -35,8 +35,8 @@ with col3:
         st.image('./stroke2.jpg', width=300)
 
 st.markdown("""
-    <div style='font-size: 20px; font-weight: bold;'>
-    Welcome to the Brain Stroke Risk Analysis Dashboard! This interactive tool allows you to explore a dataset of patients with and without stroke, 
+    <div style='font-size: 24px; font-weight: bold;'>
+    Welcome to the Brain Stroke Risk Analysis Dashboard!<br>This interactive tool allows you to explore a dataset of patients with and without stroke, 
     with the aim of identifying key risk factors and trends.
     </div>
     """, unsafe_allow_html=True)
