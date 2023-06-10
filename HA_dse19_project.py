@@ -20,14 +20,24 @@ width = 400
 # Title
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.image('./strokegraphic.jpg', width=300)
+    st.markdown("<div style='padding: 15px; text-align: center;'><img src='./strokegraphic.jpg' width='300'></div>", unsafe_allow_html=True)
 with col2:
     st.write("")
     st.write("")
     st.write("")
-    st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis<br>Dashboard</p></div>""", unsafe_allow_html=True)
+    st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0; padding-top: 15px;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis<br>Dashboard</p></div>""", unsafe_allow_html=True)
 with col3:
-    st.image('./stroke2.jpg', width=300)
+    st.markdown("<div style='padding: 15px; text-align: center;'><img src='./stroke2.jpg' width='300'></div>", unsafe_allow_html=True)
+
+# with col1:
+#     st.image('./strokegraphic.jpg', width=300)
+# with col2:
+#     st.write("")
+#     st.write("")
+#     st.write("")
+#     st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis<br>Dashboard</p></div>""", unsafe_allow_html=True)
+# with col3:
+#     st.image('./stroke2.jpg', width=300)
 
 st.write("""Welcome to the Brain Stroke Risk Analysis Dashboard! This interactive tool allows you to explore a dataset of patients with and without stroke, 
 with the aim of identifying key risk factors and trends.""")
