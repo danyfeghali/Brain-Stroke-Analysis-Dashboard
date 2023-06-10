@@ -23,13 +23,13 @@ width = 400
 
 # Title
 
-st.markdown("""<div style='display: flex; justify-content: space-between; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
+st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 with col1:
-    st.image('./strokegraphic.jpg')
+    st.image('./strokegraphic.jpg', width=300)
 with col2:
-    st.image('./Stroke.png')
+    st.image('./Stroke.png', width=300)
 
 st.write("""Welcome to the Brain Stroke Risk Analysis Dashboard! This interactive tool allows you to explore a dataset of patients with and without stroke, 
 with the aim of identifying key risk factors and trends.""")
