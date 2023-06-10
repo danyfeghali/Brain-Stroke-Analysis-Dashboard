@@ -17,19 +17,14 @@ st.set_page_config(
 height = 500
 width = 400
 
-# # Title
-# st.markdown("""<div style='background-color: lightblue;'><p style='color: black; font-size: 35px; font-weight: bold; text-align: center;'>
-# Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
-
 # Title
-
-st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(2)
 with col1:
     st.image('./strokegraphic.jpg', width=300)
 with col2:
-    st.image('./stroke-animation.gif', width=300)
+    st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
+with col3:
+    st.image('./stroke-animation.gif')
 
 st.write("""Welcome to the Brain Stroke Risk Analysis Dashboard! This interactive tool allows you to explore a dataset of patients with and without stroke, 
 with the aim of identifying key risk factors and trends.""")
