@@ -489,7 +489,6 @@ with tab4:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-
         # Create BMI categories
         bins = [-np.inf, 18.5, 24.9, 29.9, np.inf]
         names = ['Underweight (<18.5)', 'Normal weight (18.5-24.9)', 'Overweight (25-29.9)', 'Obesity (>30)']
@@ -525,48 +524,6 @@ with tab4:
                             autosize=True)
 
         st.plotly_chart(fig1, use_container_width=True)
-
-        # # Create another copy of the DataFrame for the second figure
-        # df2 = df.copy()
-
-        # df2[risk_factor] = df2[risk_factor].map({0: f'No {risk_factor.capitalize()}', 1: f'{risk_factor.capitalize()}'})
-        
-        # df2['bmi_category'] = df2['bmi'].apply(lambda x: 'High (>25)' if x >= 25 else 'Low (<25)')
-        # df2['stroke_status'] = df2['stroke'].map({0: 'No Stroke', 1: 'Stroke'})
-
-        # # Calculate counts of each group
-        # stroke_bmi_hypertension_counts = df2.groupby(['stroke_status', risk_factor, 'bmi_category']).size()
-
-        # # Calculate proportions by dividing by total counts within each 'stroke_status' group
-        # stroke_bmi_hypertension = stroke_bmi_hypertension_counts / stroke_bmi_hypertension_counts.groupby(level=0).transform(sum)
-
-        # # Reset index
-        # stroke_bmi_hypertension = stroke_bmi_hypertension.reset_index()
-
-        # # Rename columns for clarity
-        # stroke_bmi_hypertension.columns = ['stroke_status', risk_factor, 'bmi_category', 'proportion']
-
-        # # Create the plot
-        # fig2 = px.bar(stroke_bmi_hypertension, 
-        #                 x='stroke_status', 
-        #                 y='proportion', 
-        #                 color=risk_factor,
-        #                 facet_row='bmi_category',
-        #                 facet_row_spacing=0.1,
-        #                 labels={'proportion': 'Proportion of Patients', 
-        #                         'stroke_status': 'Stroke Incidence',
-        #                         risk_factor: risk_factor.capitalize()+' Status',
-        #                         'bmi_category': 'BMI Category'},
-        #                 title=f'Proportion of {risk_factor.capitalize()} Status and BMI Category by Stroke Incidence',
-        #                 barmode='group',
-        #                 color_discrete_sequence=['darkblue', 'lightblue'])
-
-        # fig2.update_layout(title_x=0, title_font=dict(size=18),
-        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     legend=dict(font=dict(size=14)),
-        #                     autosize=True)
-        # st.plotly_chart(fig2, use_container_width=True)
 
     # Create two columns
     col3, col4 = st.columns(2)
@@ -612,6 +569,7 @@ with tab4:
             title_text=f'Influence of {risk_factor.capitalize()} on Stroke Incidence Differentially Impacts Male and Female Smokers',
             title_x=0, 
             title_font=dict(size=18),
+            xaxis_title='Stroke Incidence', yaxis_title='Smoking Status',
             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)),
             legend=dict(font=dict(size=14)),
@@ -667,7 +625,8 @@ with tab4:
             title_text=f'Influence of {risk_factor.capitalize()} on Stroke Incidence Across Work Types and Marital Status',
             title_x=0, 
             title_font=dict(size=18),
-            xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+            xaxis_title='Stroke Incidence', yaxis_title='Work Type',
+            xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)),
             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)),
             legend=dict(font=dict(size=14)),
             autosize=True,
