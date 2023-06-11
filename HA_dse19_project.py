@@ -429,7 +429,7 @@ with tab3:
 
         # Create a plotly figure
         fig = go.Figure(data=[
-            go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'])
+            go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'], width=0.4)
         ])
 
         # Remove the legend
