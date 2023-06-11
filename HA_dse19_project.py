@@ -590,10 +590,6 @@ with tab4:
         married_df = grouped_df[grouped_df['ever_married']=='Yes']
         not_married_df = grouped_df[grouped_df['ever_married']=='No']
             
-        # Ensure that both dataframes have the same work types
-        # married_df = married_df[married_df['work_type'].isin(not_married_df['work_type'])]
-        # not_married_df = not_married_df[not_married_df['work_type'].isin(married_df['work_type'])]
-
         # Create a diverging bar chart
         fig = go.Figure()
 
