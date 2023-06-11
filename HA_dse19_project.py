@@ -423,54 +423,28 @@ with tab3:
 
     # Use the second column for resulting visualization
     with col6:
-
         # Total counts of stroke and no-stroke cases in the whole dataset
-        total_counts = len(df)
+        total_stroke_counts = df['stroke'].value_counts()
 
         # Counts of stroke and no-stroke cases in the filtered data
-        flt_stroke_counts = df_flt['stroke'].value_counts(normalize=True)
-        
-        # Adjust the index
-        flt_stroke_counts.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in flt_stroke_counts.index]
+        flt_stroke_counts = df_flt['stroke'].value_counts()
 
-        # Create a plotly figure with two bars for each category
+        # Calculate proportions
+        stroke_proportions = flt_stroke_counts / total_stroke_counts
+
+        # Adjust the index
+        stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
+
+        # Create a plotly figure
         fig = go.Figure(data=[
-            go.Bar(name='Stroke', x=flt_stroke_counts.index, y=flt_stroke_counts.values, marker_color=['darkblue', 'red'])
+            go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'])
         ])
 
-        # Update layout
-        fig.update_layout(barmode='group',
-                        title_text='Proportion of Stroke Cases Based on User Selection',
-                        xaxis_title='Condition',
-                        yaxis_title='Proportion',
-                        autosize=True)
-        
+        # Remove the legend
+        fig.update_layout(showlegend=False, bargroupgap=0.3)
+
         # Display the figure
         st.plotly_chart(fig)
-
-
-        # # Total counts of stroke and no-stroke cases in the whole dataset
-        # total_stroke_counts = df['stroke'].value_counts()
-
-        # # Counts of stroke and no-stroke cases in the filtered data
-        # flt_stroke_counts = df_flt['stroke'].value_counts()
-
-        # # Calculate proportions
-        # stroke_proportions = flt_stroke_counts / total_stroke_counts
-
-        # # Adjust the index
-        # stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
-
-        # # Create a plotly figure
-        # fig = go.Figure(data=[
-        #     go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'])
-        # ])
-
-        # # Remove the legend
-        # fig.update_layout(showlegend=False, bargroupgap=0.3)
-
-        # # Display the figure
-        # st.plotly_chart(fig)
 
     with st.container():
         st.markdown("<hr style='border: 1px solid black'>", unsafe_allow_html=True)
