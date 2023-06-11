@@ -181,14 +181,13 @@ with tab2:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-
         # Calculate proportions for Residence
         residence_stroke = df.groupby('Residence_type')['stroke'].value_counts(normalize=True).unstack()
 
         # Bar chart for Residence
         fig2 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=['Rural', 'Urban'], y=residence_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=['Rural', 'Urban'], y=residence_stroke[1].values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=['Rural', 'Urban'], y=residence_stroke[0].values, orientation='h', marker_color='lightblue'),
+            go.Bar(name='Stroke', x=['Rural', 'Urban'], y=residence_stroke[1].values, orientation='h', marker_color='darkblue')
         ])
 
         # Change the bar mode and layout
