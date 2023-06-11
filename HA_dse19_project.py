@@ -181,8 +181,9 @@ with tab2:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
+        
         # Group data by stroke and residence type
-        residence_stroke = df.groupby('Residence_type')['stroke'].value_counts(normalize=True).unstack()
+        residence_stroke = df.groupby('stroke')['Residence_type'].value_counts(normalize=True).unstack()
 
         # Create a bar chart for stroke incidence by residence type
         fig2 = go.Figure()
@@ -294,21 +295,47 @@ with tab3:
 
     # Display the figures side by side
     with col1:
-        # Calculate proportions for hypertension
-        hypertension_stroke = df.groupby('hypertension')['stroke'].value_counts(normalize=True).unstack()
-        # Bar chart for hypertension
-        fig1 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[1].values, marker_color='darkblue')
+        # Map residence type for readability
+        residence_mapping = {0: 'Rural', 1: 'Urban'}
+        df['Residence_label'] = df['Residence_type'].map(residence_mapping)
+
+        # Calculate proportions for Residence
+        residence_stroke = df.groupby('Residence_label')['stroke'].value_counts(normalize=True).unstack()
+
+        # Bar chart for Residence
+        fig2 = go.Figure(data=[
+            go.Bar(name='No Stroke', x=['Rural', 'Urban'], y=residence_stroke[0].values, marker_color='lightblue'),
+            go.Bar(name='Stroke', x=['Rural', 'Urban'], y=residence_stroke[1].values, marker_color='darkblue')
         ])
+
         # Change the bar mode and layout
-        fig1.update_layout(barmode='group', title_text='Stroke Incidence by Hypertension Status', 
-                        xaxis_title='Hypertension Status', yaxis_title='Proportion of Patients', 
-                        title_x=0, title_font=dict(size=18), 
+        fig2.update_layout(barmode='group', 
+                        title_text='Stroke Incidence by Residence Type', 
+                        xaxis_title='Residence Type', 
+                        yaxis_title='Proportion of Patients', 
+                        title_x=0, 
+                        title_font=dict(size=18), 
                         xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                         yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-                        legend=dict(font=dict(size=14)),autosize=True)
-        st.plotly_chart(fig1, use_container_width=True)
+                        legend=dict(font=dict(size=14)),
+                        autosize=True)
+        st.plotly_chart(fig2, use_container_width=True)
+
+        # # Calculate proportions for hypertension
+        # hypertension_stroke = df.groupby('hypertension')['stroke'].value_counts(normalize=True).unstack()
+        # # Bar chart for hypertension
+        # fig1 = go.Figure(data=[
+        #     go.Bar(name='No Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[0].values, marker_color='lightblue'),
+        #     go.Bar(name='Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[1].values, marker_color='darkblue')
+        # ])
+        # # Change the bar mode and layout
+        # fig1.update_layout(barmode='group', title_text='Stroke Incidence by Hypertension Status', 
+        #                 xaxis_title='Hypertension Status', yaxis_title='Proportion of Patients', 
+        #                 title_x=0, title_font=dict(size=18), 
+        #                 xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                 yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                 legend=dict(font=dict(size=14)),autosize=True)
+        # st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
         heart_disease_stroke = df.groupby('heart_disease')['stroke'].value_counts(normalize=True).unstack()
