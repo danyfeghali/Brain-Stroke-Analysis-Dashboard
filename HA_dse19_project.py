@@ -186,19 +186,19 @@ with tab2:
 
         # Bar chart for Residence
         fig2 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=['Rural', 'Urban'], y=residence_stroke[0].values, orientation='h', marker_color='lightblue'),
-            go.Bar(name='Stroke', x=['Rural', 'Urban'], y=residence_stroke[1].values, orientation='h', marker_color='darkblue')
+            go.Bar(name='No Stroke', y=['Rural', 'Urban'], x=residence_stroke[0].values, orientation='h', marker_color='lightblue'),
+            go.Bar(name='Stroke', y=['Rural', 'Urban'], x=residence_stroke[1].values, orientation='h', marker_color='darkblue')
         ])
 
         # Change the bar mode and layout
         fig2.update_layout(barmode='group', 
                         title_text='Stroke Incidence by Residence Type', 
-                        xaxis_title='Residence Type', 
-                        yaxis_title='Proportion of Patients', 
+                        yaxis_title='Residence Type', 
+                        xaxis_title='Proportion of Patients', 
                         title_x=0, 
                         title_font=dict(size=18), 
-                        xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                         yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+                        xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                         legend=dict(font=dict(size=14)),
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
