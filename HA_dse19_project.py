@@ -432,6 +432,8 @@ with tab3:
         # Calculate proportions
         stroke_proportions = flt_stroke_counts / total_stroke_counts
 
+        print(stroke_proportions)
+
         # Adjust the index
         stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
 
