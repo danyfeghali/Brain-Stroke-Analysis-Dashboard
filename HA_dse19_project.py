@@ -230,11 +230,12 @@ with tab2:
         work_type_stroke = df.groupby('work_type')['stroke'].value_counts(normalize=True).unstack()
 
         # Bar chart for work type
-        fig2 = go.Figure()
-        for work_type in work_type_stroke.columns:
-            fig2.add_trace(go.Bar(name='No Stroke', x=work_type, y=[work_type_stroke.loc[work_type, 0]], marker_color='lightblue'))
-            fig2.add_trace(go.Bar(name='Stroke', x=work_type, y=[work_type_stroke.loc[work_type, 1]], marker_color='darkblue'))
+        fig2 = go.Figure(data=[
+            go.Bar(name='No Stroke', x=work_type_stroke.columns, y=work_type_stroke.loc[0].values if 0 in work_type_stroke.index else [0]*len(work_type_stroke.columns), marker_color='lightblue'),
+            go.Bar(name='Stroke', x=work_type_stroke.columns, y=work_type_stroke.loc[1].values if 1 in work_type_stroke.index else [0]*len(work_type_stroke.columns), marker_color='darkblue')
+        ])
 
+        # Change the bar mode and layout
         fig2.update_layout(barmode='group', title_text='Stroke Incidence by Work Type', 
                         xaxis_title='Work Type', yaxis_title='Proportion of Patients', 
                         title_x=0, 
@@ -244,6 +245,7 @@ with tab2:
                         legend=dict(font=dict(size=14)),
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
+
 
 
 
