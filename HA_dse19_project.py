@@ -18,7 +18,7 @@ height = 500
 width = 400
 
 # Title
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns([1,3,1])
 with col1:
     st.image('./strokegraphic.jpg', width=300)
 with col2:
@@ -28,11 +28,12 @@ with col2:
     st.write("")
     st.markdown("""<div style='display: flex; justify-content: center; align-items: center; background-color: #FFFFFF;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
 with col3:
-    col31, col32 = st.columns(2)
-    with col31:
-        st.write("")
-    with col32:
-        st.image('./stroke2.jpg', width=300)
+    st.image('./stroke2.jpg', width=300)
+    # col31, col32 = st.columns(2)
+    # with col31:
+    #     st.write("")
+    # with col32:
+    #     st.image('./stroke2.jpg', width=300)
 
 st.markdown("""
     <div style='font-size: 24px; font-weight: bold;'>
