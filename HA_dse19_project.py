@@ -489,47 +489,84 @@ with tab4:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-        # Create another copy of the DataFrame for the second figure
+
+        # Create BMI categories
+        bins = [-np.inf, 18.5, 24.9, 29.9, np.inf]
+        names = ['Underweight', 'Normal weight', 'Overweight', 'Obesity']
+        df['bmi_category'] = pd.cut(df['bmi'], bins, labels=names)
+
+        # Create a copy of the Original DataFrame
         df2 = df.copy()
 
         df2[risk_factor] = df2[risk_factor].map({0: f'No {risk_factor.capitalize()}', 1: f'{risk_factor.capitalize()}'})
-        
-        df2['bmi_category'] = df2['bmi'].apply(lambda x: 'High (>25)' if x >= 25 else 'Low (<25)')
-        df2['stroke_status'] = df2['stroke'].map({0: 'No Stroke', 1: 'Stroke'})
 
-        # Calculate counts of each group
-        stroke_bmi_hypertension_counts = df2.groupby(['stroke_status', risk_factor, 'bmi_category']).size()
+        # Create a grouped dataframe for stroke incidence by BMI category and risk factor
+        grouped_df = df2.groupby(['bmi_category', risk_factor])['stroke'].mean().reset_index()
 
-        # Calculate proportions by dividing by total counts within each 'stroke_status' group
-        stroke_bmi_hypertension = stroke_bmi_hypertension_counts / stroke_bmi_hypertension_counts.groupby(level=0).transform(sum)
+        # Create a bar plot using plotly.graph_objects
+        fig1 = go.Figure()
+        for risk_status in grouped_df[risk_factor].unique():
+            fig1.add_trace(
+                go.Bar(
+                    name=risk_status,
+                    x=grouped_df[grouped_df[risk_factor]==risk_status]['bmi_category'],
+                    y=grouped_df[grouped_df[risk_factor]==risk_status]['stroke'],
+                    marker_color='lightblue' if 'No' in risk_status else 'darkblue'
+                )
+            )
 
-        # Reset index
-        stroke_bmi_hypertension = stroke_bmi_hypertension.reset_index()
-
-        # Rename columns for clarity
-        stroke_bmi_hypertension.columns = ['stroke_status', risk_factor, 'bmi_category', 'proportion']
-
-        # Create the plot
-        fig2 = px.bar(stroke_bmi_hypertension, 
-                        x='stroke_status', 
-                        y='proportion', 
-                        color=risk_factor,
-                        facet_row='bmi_category',
-                        facet_row_spacing=0.1,
-                        labels={'proportion': 'Proportion of Patients', 
-                                'stroke_status': 'Stroke Incidence',
-                                risk_factor: risk_factor.capitalize()+' Status',
-                                'bmi_category': 'BMI Category'},
-                        title=f'Proportion of {risk_factor.capitalize()} Status and BMI Category by Stroke Incidence',
-                        barmode='group',
-                        color_discrete_sequence=['darkblue', 'lightblue'])
-
-        fig2.update_layout(title_x=0, title_font=dict(size=18),
+        # Update the layout
+        fig1.update_layout(barmode='group', title_text=f'Stroke Incidence by BMI Category and {risk_factor.capitalize()} Status',
+                            xaxis_title='BMI Category', yaxis_title='Stroke Incidence', 
+                            title_x=0, title_font=dict(size=18), 
                             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                             legend=dict(font=dict(size=14)),
                             autosize=True)
-        st.plotly_chart(fig2, use_container_width=True)
+
+        st.plotly_chart(fig1, use_container_width=True)
+
+        # # Create another copy of the DataFrame for the second figure
+        # df2 = df.copy()
+
+        # df2[risk_factor] = df2[risk_factor].map({0: f'No {risk_factor.capitalize()}', 1: f'{risk_factor.capitalize()}'})
+        
+        # df2['bmi_category'] = df2['bmi'].apply(lambda x: 'High (>25)' if x >= 25 else 'Low (<25)')
+        # df2['stroke_status'] = df2['stroke'].map({0: 'No Stroke', 1: 'Stroke'})
+
+        # # Calculate counts of each group
+        # stroke_bmi_hypertension_counts = df2.groupby(['stroke_status', risk_factor, 'bmi_category']).size()
+
+        # # Calculate proportions by dividing by total counts within each 'stroke_status' group
+        # stroke_bmi_hypertension = stroke_bmi_hypertension_counts / stroke_bmi_hypertension_counts.groupby(level=0).transform(sum)
+
+        # # Reset index
+        # stroke_bmi_hypertension = stroke_bmi_hypertension.reset_index()
+
+        # # Rename columns for clarity
+        # stroke_bmi_hypertension.columns = ['stroke_status', risk_factor, 'bmi_category', 'proportion']
+
+        # # Create the plot
+        # fig2 = px.bar(stroke_bmi_hypertension, 
+        #                 x='stroke_status', 
+        #                 y='proportion', 
+        #                 color=risk_factor,
+        #                 facet_row='bmi_category',
+        #                 facet_row_spacing=0.1,
+        #                 labels={'proportion': 'Proportion of Patients', 
+        #                         'stroke_status': 'Stroke Incidence',
+        #                         risk_factor: risk_factor.capitalize()+' Status',
+        #                         'bmi_category': 'BMI Category'},
+        #                 title=f'Proportion of {risk_factor.capitalize()} Status and BMI Category by Stroke Incidence',
+        #                 barmode='group',
+        #                 color_discrete_sequence=['darkblue', 'lightblue'])
+
+        # fig2.update_layout(title_x=0, title_font=dict(size=18),
+        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                     legend=dict(font=dict(size=14)),
+        #                     autosize=True)
+        # st.plotly_chart(fig2, use_container_width=True)
 
     # Create two columns
     col3, col4 = st.columns(2)
