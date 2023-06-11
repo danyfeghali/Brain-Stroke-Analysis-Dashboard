@@ -258,7 +258,7 @@ with tab2:
         fig = px.treemap(proportions_df, path=['smoking_status', 'stroke'], 
                         values='values', 
                         color='proportion',
-                        color_continuous_scale=px.colors.qualitative.Set4,  # Change color scale to different shades of blue
+                        color_continuous_scale=px.colors.qualitative.Set3,  # Change color scale to different shades of blue
                         title='<b>Treemap of Smoking Proportions within Stroke and Non-Stroke Patients</b>',
                         hover_data=['proportion'])  # Include proportion data in the hover data
 
