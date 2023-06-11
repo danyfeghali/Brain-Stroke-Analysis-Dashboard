@@ -181,26 +181,35 @@ with tab2:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
+        # Map residence type for readability
+        residence_mapping = {0: 'Rural', 1: 'Urban'}
+        df['Residence_label'] = df['Residence_type'].map(residence_mapping)
 
-        # Counts of stroke and no-stroke cases in the filtered data by residence type
-        flt_residence_stroke = df.groupby('Residence_type')['stroke'].value_counts(normalize=True).unstack()
-        
-        # Create a plotly figure
-        fig2 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=flt_residence_stroke.columns, y=flt_residence_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=flt_residence_stroke.columns, y=flt_residence_stroke[1].values, marker_color='darkblue')
-        ])
+        # Group data by stroke and residence type
+        residence_stroke = df.groupby('Residence_label')['stroke'].value_counts(normalize=True).unstack()
 
-        # Adjust layout
-        fig2.update_layout(barmode='group', title_text='Stroke Incidence by Residence Type (Filtered)', 
-                        xaxis_title='Residence Type', yaxis_title='Proportion of Patients', 
-                        title_x=0, title_font=dict(size=18), 
-                        xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        # Create a bar chart for stroke incidence by residence type
+        fig2 = go.Figure()
+        color_map = {'Rural': 'darkblue', 'Urban': 'lightblue'}  # Create a color map for the residence types
+
+        for residence in residence_stroke.columns:
+            fig2.add_trace(go.Bar(name='Stroke' if residence == 1 else 'No Stroke', 
+                                y=['Rural', 'Urban'], 
+                                x=residence_stroke[residence].values, 
+                                orientation='h',
+                                marker_color=color_map[residence]))
+
+        fig2.update_layout(barmode='stack', 
+                        title_text='Stroke Incidence by Residence Type', 
+                        yaxis_title='Residence Type', 
+                        xaxis_title='Proportion of Patients', 
+                        title_x=0, 
+                        title_font=dict(size=18), 
                         yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+                        xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                         legend=dict(font=dict(size=14)),
-                        autosize=True, margin=dict(r=135))
-
-        # Display the figure
+                        autosize=True, 
+                        margin=dict(r=135))
         st.plotly_chart(fig2, use_container_width=True)
 
 
