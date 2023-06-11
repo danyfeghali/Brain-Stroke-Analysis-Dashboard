@@ -207,8 +207,8 @@ with tab2:
         
         # Bar chart for marital status
         fig1 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=['Not Married', 'Married'], y=marital_status_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=['Not Married', 'Married'], y=marital_status_stroke[1].values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=['Not Married', 'Married'], y=marital_status_stroke[0].values, marker_color='lightblue', width=0.4),
+            go.Bar(name='Stroke', x=['Not Married', 'Married'], y=marital_status_stroke[1].values, marker_color='darkblue', width=0.4)
         ])
 
         # Change the bar mode and layout
