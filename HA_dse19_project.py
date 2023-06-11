@@ -423,19 +423,31 @@ with tab3:
 
     # Use the second column for resulting visualization
     with col6:
-        # Calculate proportions of stroke and no-stroke cases in the filtered data
-        flt_stroke_props = df_flt['stroke'].value_counts(normalize=True)
-        flt_stroke_props.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in flt_stroke_props.index]
 
-        # Create a plotly figure
+        # Total counts of stroke and no-stroke cases in the whole dataset
+        total_counts = len(df)
+
+        # Counts of stroke and no-stroke cases in the filtered data
+        flt_stroke_counts = df_flt['stroke'].value_counts(normalize=True)
+        
+        # Adjust the index
+        flt_stroke_counts.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in flt_stroke_counts.index]
+
+        # Create a plotly figure with two bars for each category
         fig = go.Figure(data=[
-            go.Bar(name='No Stroke', x=flt_stroke_props.index, y=flt_stroke_props[0], marker_color='lightblue'),
-            go.Bar(name='Stroke', x=flt_stroke_props.index, y=flt_stroke_props[1], marker_color='darkblue')
+            go.Bar(name='Stroke', x=flt_stroke_counts.index, y=flt_stroke_counts.values, marker_color=['darkblue', 'red'])
         ])
-        fig.update_layout(barmode='group', title_text='Stroke Incidence in Filtered Data', 
-                            xaxis_title='Stroke', yaxis_title='Proportion of Patients', 
-                            autosize=True)
-        st.plotly_chart(fig, use_container_width=True)
+
+        # Update layout
+        fig.update_layout(barmode='group',
+                        title_text='Proportion of Stroke Cases Based on User Selection',
+                        xaxis_title='Condition',
+                        yaxis_title='Proportion',
+                        autosize=True)
+        
+        # Display the figure
+        st.plotly_chart(fig)
+
 
         # # Total counts of stroke and no-stroke cases in the whole dataset
         # total_stroke_counts = df['stroke'].value_counts()
