@@ -44,7 +44,7 @@ with tab1:
     column1, column2, column3, column4, column5 = st.columns(5)
     total_patients = df.shape[0]
     total_strokes = df[df['stroke'] == 1].shape[0]
-    avg_age = round(df['age'].mean(), 0)
+    avg_age = round(df['age'].mean())
     avg_bmi = round(df['bmi'].mean(), 1)
     avg_glucose = round(df['avg_glucose_level'].mean(), 1)
     column1.metric('Total number of patients', total_patients)
