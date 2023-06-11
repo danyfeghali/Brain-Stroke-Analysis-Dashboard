@@ -704,7 +704,7 @@ with tab4:
                         x='BMI Category', 
                         y='Stroke Proportion', 
                         color='Glucose Category',
-                        labels={'Stroke Proportion': 'Proportion of Patients with Stroke', 
+                        labels={'Stroke Proportion': 'Stroke Incidence', 
                                 'Glucose Category': 'Glucose Level Category',
                                 'BMI Category': 'BMI Category'},
                         title='Proportion of Patients with Stroke by BMI and Glucose Level Categories',
