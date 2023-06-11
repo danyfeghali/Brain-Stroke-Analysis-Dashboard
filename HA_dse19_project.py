@@ -444,7 +444,7 @@ with tab3:
         fig.update_layout(showlegend=False, bargroupgap=0.3)
 
         # Display the figure
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     with st.container():
         st.markdown("<hr style='border: 1px solid black'>", unsafe_allow_html=True)
