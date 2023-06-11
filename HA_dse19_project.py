@@ -432,8 +432,6 @@ with tab3:
         # Calculate proportions
         stroke_proportions = flt_stroke_counts / total_stroke_counts
 
-        print(stroke_proportions)
-
         # Adjust the index
         stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
 
@@ -443,7 +441,7 @@ with tab3:
         ])
 
         # Remove the legend
-        fig.update_layout(showlegend=False, bargroupgap=0.3)
+        fig.update_layout(showlegend=False, bargroupgap=0.3, title_text='Proportion of Stroke and No-Stroke Cases within Selected Conditions', title_x=0, title_font=dict(size=18))
 
         # Display the figure
         st.plotly_chart(fig, use_container_width=True)
