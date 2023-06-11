@@ -420,19 +420,18 @@ with tab3:
 
         df['bmi_binned'] = pd.cut(df['bmi'], bins=bins, labels=labels, include_lowest=True)
 
-        # Calculate proportions separately for Stroke and No Stroke cases
-        stroke_bmi = df[df['stroke'] == 1]['bmi_binned'].value_counts(normalize=True).loc[labels]
-        no_stroke_bmi = df[df['stroke'] == 0]['bmi_binned'].value_counts(normalize=True).loc[labels]
+        # Calculate proportions of Stroke within each BMI group
+        bmi_stroke = df.groupby('bmi_binned')['stroke'].value_counts(normalize=True).unstack()
 
         # Bar chart
         fig4 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=no_stroke_bmi.index, y=no_stroke_bmi.values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=stroke_bmi.index, y=stroke_bmi.values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=bmi_stroke.index, y=bmi_stroke[0].values, marker_color='lightblue'),
+            go.Bar(name='Stroke', x=bmi_stroke.index, y=bmi_stroke[1].values, marker_color='darkblue')
         ])
 
         # Update the layout
-        fig4.update_layout(barmode='group',title_text='BMI by Stroke Incidence', 
-                            xaxis_title='BMI', yaxis_title='Proportion of Patients', 
+        fig4.update_layout(barmode='group', title_text='Stroke Incidence by BMI Group', 
+                            xaxis_title='BMI Group', yaxis_title='Proportion of Patients', 
                             title_x=0, title_font=dict(size=18), 
                             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
