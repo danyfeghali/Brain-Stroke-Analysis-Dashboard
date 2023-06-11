@@ -231,8 +231,8 @@ with tab2:
 
         # Bar chart for work type
         fig2 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=work_type_stroke.columns, y=work_type_stroke.loc[0].values if 0 in work_type_stroke.index else [0]*len(work_type_stroke.columns), marker_color='lightblue'),
-            go.Bar(name='Stroke', x=work_type_stroke.columns, y=work_type_stroke.loc[1].values if 1 in work_type_stroke.index else [0]*len(work_type_stroke.columns), marker_color='darkblue')
+            go.Bar(name='No Stroke', x=work_type_stroke.index, y=work_type_stroke[0].values if 0 in work_type_stroke.columns else [0]*len(work_type_stroke.index), marker_color='lightblue'),
+            go.Bar(name='Stroke', x=work_type_stroke.index, y=work_type_stroke[1].values if 1 in work_type_stroke.columns else [0]*len(work_type_stroke.index), marker_color='darkblue')
         ])
 
         # Change the bar mode and layout
@@ -245,6 +245,7 @@ with tab2:
                         legend=dict(font=dict(size=14)),
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
+
 
 
 
