@@ -13,10 +13,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# Define width and height
-height = 500
-width = 400
-
 # Title
 col1, col2, col3 = st.columns([1,4,1])
 with col1:
