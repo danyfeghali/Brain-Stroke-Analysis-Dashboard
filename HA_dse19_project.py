@@ -27,8 +27,6 @@ with col2:
     st.write("")
     st.write("")
     st.markdown("""<div style='display: flex; justify-content: center; align-items: center;'><p style='color: black; font-size: 35px; font-weight: bold; text-align: center; width: 100%;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
-
-    #st.markdown("""<div style='display: flex; justify-content: center; align-items: center;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
 with col3:
     st.image('./stroke2.jpg', use_column_width = True)
 
