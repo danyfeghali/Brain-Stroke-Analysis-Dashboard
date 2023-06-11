@@ -216,7 +216,7 @@ with tab2:
         ])
 
         # Change the bar mode and layout
-        fig1.update_layout(barmode='group', title_text='Stroke Incidence by Marital Status', 
+        fig1.update_layout(barmode='stack', title_text='Stroke Incidence by Marital Status', 
                         xaxis_title='Marital Status', yaxis_title='Proportion of Patients', 
                         title_x=0, title_font=dict(size=18), 
                         xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
@@ -232,8 +232,15 @@ with tab2:
         # Bar chart for work type
         fig2 = go.Figure()
         for work_type in work_type_stroke.columns:
-            fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 0]], marker_color='lightblue'))
-            fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 1]], marker_color='darkblue'))
+            if 0 in work_type_stroke.index:
+                fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 0]], marker_color='lightblue'))
+            else:
+                fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[0], marker_color='lightblue'))
+                
+            if 1 in work_type_stroke.index:
+                fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 1]], marker_color='darkblue'))
+            else:
+                fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[0], marker_color='darkblue'))
 
         fig2.update_layout(barmode='group', title_text='Stroke Incidence by Work Type', 
                         xaxis_title='Work Type', yaxis_title='Proportion of Patients', 
@@ -244,6 +251,7 @@ with tab2:
                         legend=dict(font=dict(size=14)),
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
+
 
 
     # with col3:
