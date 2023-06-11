@@ -295,15 +295,15 @@ with tab3:
     # Display the figures side by side
     with col1:
         # Calculate proportions for hypertension
-        hypertension_stroke = df.groupby('stroke')['hypertension'].value_counts(normalize=True).unstack()
+        hypertension_stroke = df.groupby('hypertension')['stroke'].value_counts(normalize=True).unstack()
         # Bar chart for hypertension
         fig1 = go.Figure(data=[
-            go.Bar(name='No Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[1].values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[0].values, marker_color='lightblue'),
+            go.Bar(name='Stroke', x=['No Hypertension', 'Hypertension'], y=hypertension_stroke[1].values, marker_color='darkblue')
         ])
         # Change the bar mode and layout
-        fig1.update_layout(barmode='group', title_text='Hypertension Status by Stroke Incidence', 
-                        xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
+        fig1.update_layout(barmode='group', title_text='Stroke Incidence by Hypertension Status', 
+                        xaxis_title='Hypertension Status', yaxis_title='Proportion of Patients', 
                         title_x=0, title_font=dict(size=18), 
                         xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                         yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
@@ -311,20 +311,53 @@ with tab3:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-        heart_disease_stroke = df.groupby('stroke')['heart_disease'].value_counts(normalize=True).unstack()
+        heart_disease_stroke = df.groupby('heart_disease')['stroke'].value_counts(normalize=True).unstack()
         # Bar chart for heart disease
         fig2 = go.Figure(data=[
-            go.Bar(name='No Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[0].values, marker_color='lightblue'),
-            go.Bar(name='Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[1].values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=['No Heart Disease', 'Heart Disease'], y=heart_disease_stroke[0].values, marker_color='lightblue'),
+            go.Bar(name='Stroke', x=['No Heart Disease', 'Heart Disease'], y=heart_disease_stroke[1].values, marker_color='darkblue')
         ])
 
-        fig2.update_layout(barmode='group', title_text='Heart Disease Status by Stroke Incidence', 
-                xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
+        fig2.update_layout(barmode='group', title_text='Stroke Incidence by Heart Disease Status', 
+                xaxis_title='Heart Disease Status', yaxis_title='Proportion of Patients', 
                 title_x=0, title_font=dict(size=18), 
                 xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                 yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
                 legend=dict(font=dict(size=14)),autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
+
+    # with col1:
+    #     # Calculate proportions for hypertension
+    #     hypertension_stroke = df.groupby('stroke')['hypertension'].value_counts(normalize=True).unstack()
+    #     # Bar chart for hypertension
+    #     fig1 = go.Figure(data=[
+    #         go.Bar(name='No Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[0].values, marker_color='lightblue'),
+    #         go.Bar(name='Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[1].values, marker_color='darkblue')
+    #     ])
+    #     # Change the bar mode and layout
+    #     fig1.update_layout(barmode='group', title_text='Hypertension Status by Stroke Incidence', 
+    #                     xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
+    #                     title_x=0, title_font=dict(size=18), 
+    #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+    #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+    #                     legend=dict(font=dict(size=14)),autosize=True)
+    #     st.plotly_chart(fig1, use_container_width=True)
+
+    # with col2:
+    #     heart_disease_stroke = df.groupby('stroke')['heart_disease'].value_counts(normalize=True).unstack()
+    #     # Bar chart for heart disease
+    #     fig2 = go.Figure(data=[
+    #         go.Bar(name='No Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[0].values, marker_color='lightblue'),
+    #         go.Bar(name='Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[1].values, marker_color='darkblue')
+    #     ])
+
+    #     fig2.update_layout(barmode='group', title_text='Heart Disease Status by Stroke Incidence', 
+    #             xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
+    #             title_x=0, title_font=dict(size=18), 
+    #             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+    #             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+    #             legend=dict(font=dict(size=14)),autosize=True)
+    #     st.plotly_chart(fig2, use_container_width=True)
 
     # Create two columns
     col3, col4 = st.columns(2)
