@@ -326,39 +326,6 @@ with tab3:
                 legend=dict(font=dict(size=14)),autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
 
-    # with col1:
-    #     # Calculate proportions for hypertension
-    #     hypertension_stroke = df.groupby('stroke')['hypertension'].value_counts(normalize=True).unstack()
-    #     # Bar chart for hypertension
-    #     fig1 = go.Figure(data=[
-    #         go.Bar(name='No Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[0].values, marker_color='lightblue'),
-    #         go.Bar(name='Hypertension', x=['No Stroke', 'Stroke'], y=hypertension_stroke[1].values, marker_color='darkblue')
-    #     ])
-    #     # Change the bar mode and layout
-    #     fig1.update_layout(barmode='group', title_text='Hypertension Status by Stroke Incidence', 
-    #                     xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
-    #                     title_x=0, title_font=dict(size=18), 
-    #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     legend=dict(font=dict(size=14)),autosize=True)
-    #     st.plotly_chart(fig1, use_container_width=True)
-
-    # with col2:
-    #     heart_disease_stroke = df.groupby('stroke')['heart_disease'].value_counts(normalize=True).unstack()
-    #     # Bar chart for heart disease
-    #     fig2 = go.Figure(data=[
-    #         go.Bar(name='No Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[0].values, marker_color='lightblue'),
-    #         go.Bar(name='Heart Disease', x=['No Stroke', 'Stroke'], y=heart_disease_stroke[1].values, marker_color='darkblue')
-    #     ])
-
-    #     fig2.update_layout(barmode='group', title_text='Heart Disease Status by Stroke Incidence', 
-    #             xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
-    #             title_x=0, title_font=dict(size=18), 
-    #             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #             yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #             legend=dict(font=dict(size=14)),autosize=True)
-    #     st.plotly_chart(fig2, use_container_width=True)
-
     # Create two columns
     col3, col4 = st.columns(2)
 
@@ -387,31 +354,6 @@ with tab3:
                             legend=dict(font=dict(size=14)),
                             autosize=True)
         st.plotly_chart(fig3, use_container_width=True)
-
-        # bins = [0, 100, 150, 200, df['avg_glucose_level'].max()]
-        # labels = ['<100', '100-150', '150-200', '>200']
-
-        # df['avg_glucose_level_binned'] = pd.cut(df['avg_glucose_level'], bins=bins, labels=labels, include_lowest=True)
-
-        # # Calculate proportions separately for Stroke and No Stroke cases
-        # stroke_glucose = df[df['stroke'] == 1]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
-        # no_stroke_glucose = df[df['stroke'] == 0]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
-
-        # # Bar chart
-        # fig3 = go.Figure(data=[
-        #     go.Bar(name='No Stroke', x=no_stroke_glucose.index, y=no_stroke_glucose.values, marker_color='lightblue'),
-        #     go.Bar(name='Stroke', x=stroke_glucose.index, y=stroke_glucose.values, marker_color='darkblue')
-        # ])
-
-        # # Update the layout
-        # fig3.update_layout(barmode='group', title_text='Average Glucose Level by Stroke Incidence', 
-        #                     xaxis_title='Average Glucose Level', yaxis_title='Proportion of Patients', 
-        #                     title_x=0, title_font=dict(size=18), 
-        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     legend=dict(font=dict(size=14)),
-        #                     autosize=True)
-        # st.plotly_chart(fig3, use_container_width=True)
 
     with col4:
         # Create bins for BMI
@@ -481,28 +423,42 @@ with tab3:
 
     # Use the second column for resulting visualization
     with col6:
-        # Total counts of stroke and no-stroke cases in the whole dataset
-        total_stroke_counts = df['stroke'].value_counts()
-
-        # Counts of stroke and no-stroke cases in the filtered data
-        flt_stroke_counts = df_flt['stroke'].value_counts()
-
-        # Calculate proportions
-        stroke_proportions = flt_stroke_counts / total_stroke_counts
-
-        # Adjust the index
-        stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
+        # Calculate proportions of stroke and no-stroke cases in the filtered data
+        flt_stroke_props = df_flt['stroke'].value_counts(normalize=True)
+        flt_stroke_props.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in flt_stroke_props.index]
 
         # Create a plotly figure
         fig = go.Figure(data=[
-            go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'])
+            go.Bar(name='No Stroke', x=flt_stroke_props.index, y=flt_stroke_props[0], marker_color='lightblue'),
+            go.Bar(name='Stroke', x=flt_stroke_props.index, y=flt_stroke_props[1], marker_color='darkblue')
         ])
+        fig.update_layout(barmode='group', title_text='Stroke Incidence in Filtered Data', 
+                            xaxis_title='Stroke', yaxis_title='Proportion of Patients', 
+                            autosize=True)
+        st.plotly_chart(fig, use_container_width=True)
 
-        # Remove the legend
-        fig.update_layout(showlegend=False, bargroupgap=0.3)
+        # # Total counts of stroke and no-stroke cases in the whole dataset
+        # total_stroke_counts = df['stroke'].value_counts()
 
-        # Display the figure
-        st.plotly_chart(fig)
+        # # Counts of stroke and no-stroke cases in the filtered data
+        # flt_stroke_counts = df_flt['stroke'].value_counts()
+
+        # # Calculate proportions
+        # stroke_proportions = flt_stroke_counts / total_stroke_counts
+
+        # # Adjust the index
+        # stroke_proportions.index = ['No Stroke' if idx == 0 else 'Stroke' for idx in stroke_proportions.index]
+
+        # # Create a plotly figure
+        # fig = go.Figure(data=[
+        #     go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'])
+        # ])
+
+        # # Remove the legend
+        # fig.update_layout(showlegend=False, bargroupgap=0.3)
+
+        # # Display the figure
+        # st.plotly_chart(fig)
 
     with st.container():
         st.markdown("<hr style='border: 1px solid black'>", unsafe_allow_html=True)
