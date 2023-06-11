@@ -618,7 +618,7 @@ with tab4:
                         ticktext=['40%','35%','30%','25%','20%','15%','10%', '5%', '0%','5%','10%','15%','20%', '25%','30%','35%','40%'])
 
         fig.update_layout(
-            title_text=f'Influence of {risk_factor.capitalize()} on Stroke Incidence Across Work Types and Marital Status',
+            title_text=f'Influence of {risk_factor.capitalize()} on Stroke Incidence<br>Across Work Types and Marital Status',
             title_x=0, 
             title_font=dict(size=18),
             xaxis_title='Stroke Incidence', yaxis_title='Work Type',
