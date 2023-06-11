@@ -18,7 +18,7 @@ height = 500
 width = 400
 
 # Title
-col1, col2, col3 = st.columns([1,3,1])
+col1, col2, col3 = st.columns([1,5,1])
 with col1:
     st.image('./strokegraphic.jpg', width=300)
 with col2:
