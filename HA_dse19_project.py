@@ -20,20 +20,17 @@ width = 400
 # Title
 col1, col2, col3 = st.columns([1,4,1])
 with col1:
-    st.image('./strokegraphic.jpg', width=300, use_column_width = True)
+    st.image('./strokegraphic.jpg', use_column_width = True)
 with col2:
     st.write("")
     st.write("")
     st.write("")
     st.write("")
-    st.markdown("""<div style='display: flex; justify-content: center; align-items: center;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
+    st.markdown("""<div style='display: flex; justify-content: center; align-items: center;'><p style='color: black; font-size: 35px; font-weight: bold; text-align: center; width: 100%;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
+
+    #st.markdown("""<div style='display: flex; justify-content: center; align-items: center;'><p style='color: black; font-size: 35px; font-weight: bold;'>Brain Stroke Analysis Dashboard</p></div>""", unsafe_allow_html=True)
 with col3:
-    st.image('./stroke2.jpg', width=300, use_column_width = True)
-    # col31, col32 = st.columns(2)
-    # with col31:
-    #     st.write("")
-    # with col32:
-    #     st.image('./stroke2.jpg', width=300)
+    st.image('./stroke2.jpg', use_column_width = True)
 
 st.markdown("""
     <div style='font-size: 24px; font-weight: bold;'>
