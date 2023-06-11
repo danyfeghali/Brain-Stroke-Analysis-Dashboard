@@ -232,15 +232,8 @@ with tab2:
         # Bar chart for work type
         fig2 = go.Figure()
         for work_type in work_type_stroke.columns:
-            if 0 in work_type_stroke.index:
-                fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 0]], marker_color='lightblue'))
-            else:
-                fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[0], marker_color='lightblue'))
-                
-            if 1 in work_type_stroke.index:
-                fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 1]], marker_color='darkblue'))
-            else:
-                fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[0], marker_color='darkblue'))
+            fig2.add_trace(go.Bar(name='No Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 0]], marker_color='lightblue'))
+            fig2.add_trace(go.Bar(name='Stroke', x=[work_type], y=[work_type_stroke.loc[work_type, 1]], marker_color='darkblue'))
 
         fig2.update_layout(barmode='group', title_text='Stroke Incidence by Work Type', 
                         xaxis_title='Work Type', yaxis_title='Proportion of Patients', 
