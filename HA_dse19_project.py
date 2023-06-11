@@ -492,7 +492,7 @@ with tab4:
 
         # Create BMI categories
         bins = [-np.inf, 18.5, 24.9, 29.9, np.inf]
-        names = ['Underweight', 'Normal weight', 'Overweight', 'Obesity']
+        names = ['Underweight (<18.5)', 'Normal weight (18.5-24.9)', 'Overweight (25-29.9)', 'Obesity (>30)']
         df['bmi_category'] = pd.cut(df['bmi'], bins, labels=names)
 
         # Create a copy of the Original DataFrame
