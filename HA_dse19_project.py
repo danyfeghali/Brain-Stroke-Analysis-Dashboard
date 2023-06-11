@@ -364,47 +364,22 @@ with tab3:
 
     # Display the figures side by side
     with col3:
-        # # Create bins for average glucose level
-        # bins = [0, 100, 150, 200, df['avg_glucose_level'].max()]
-        # labels = ['<100', '100-150', '150-200', '>200']
-
-        # df['avg_glucose_level_binned'] = pd.cut(df['avg_glucose_level'], bins=bins, labels=labels, include_lowest=True)
-
-        # # Calculate proportions of Stroke cases within each glucose level group
-        # glucose_stroke_proportions = df.groupby('avg_glucose_level_binned')['stroke'].mean().loc[labels]
-
-        # # Bar chart
-        # fig3 = go.Figure(data=[
-        #     go.Bar(name='Stroke Proportion', x=glucose_stroke_proportions.index, y=glucose_stroke_proportions.values, marker_color='darkblue')
-        # ])
-
-        # # Update the layout
-        # fig3.update_layout(title_text='Proportion of Stroke Cases by Average Glucose Level Group', 
-        #                     xaxis_title='Average Glucose Level Group', yaxis_title='Proportion of Stroke Cases', 
-        #                     title_x=0, title_font=dict(size=18), 
-        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     legend=dict(font=dict(size=14)),
-        #                     autosize=True)
-        # st.plotly_chart(fig3, use_container_width=True)
-        # Create bins for average glucose level
         bins = [0, 100, 150, 200, df['avg_glucose_level'].max()]
         labels = ['<100', '100-150', '150-200', '>200']
 
         df['avg_glucose_level_binned'] = pd.cut(df['avg_glucose_level'], bins=bins, labels=labels, include_lowest=True)
 
-        # Calculate proportions separately for Stroke and No Stroke cases
-        stroke_glucose = df[df['stroke'] == 1]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
-        no_stroke_glucose = df[df['stroke'] == 0]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
+        # Calculate proportions separately for each glucose level bin
+        glucose_stroke = df.groupby('avg_glucose_level_binned')['stroke'].value_counts(normalize=True).unstack().loc[labels]
 
         # Bar chart
         fig3 = go.Figure(data=[
-            go.Bar(name='No Stroke', x=no_stroke_glucose.index, y=no_stroke_glucose.values, marker_color='lightblue'),
-            go.Bar(name='Stroke', x=stroke_glucose.index, y=stroke_glucose.values, marker_color='darkblue')
+            go.Bar(name='No Stroke', x=glucose_stroke.index, y=glucose_stroke[0].values, marker_color='lightblue'),
+            go.Bar(name='Stroke', x=glucose_stroke.index, y=glucose_stroke[1].values, marker_color='darkblue')
         ])
 
         # Update the layout
-        fig3.update_layout(barmode='group', title_text='Average Glucose Level by Stroke Incidence', 
+        fig3.update_layout(barmode='group', title_text='Stroke Incidence by Average Glucose Level', 
                             xaxis_title='Average Glucose Level', yaxis_title='Proportion of Patients', 
                             title_x=0, title_font=dict(size=18), 
                             xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
@@ -412,6 +387,31 @@ with tab3:
                             legend=dict(font=dict(size=14)),
                             autosize=True)
         st.plotly_chart(fig3, use_container_width=True)
+
+        # bins = [0, 100, 150, 200, df['avg_glucose_level'].max()]
+        # labels = ['<100', '100-150', '150-200', '>200']
+
+        # df['avg_glucose_level_binned'] = pd.cut(df['avg_glucose_level'], bins=bins, labels=labels, include_lowest=True)
+
+        # # Calculate proportions separately for Stroke and No Stroke cases
+        # stroke_glucose = df[df['stroke'] == 1]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
+        # no_stroke_glucose = df[df['stroke'] == 0]['avg_glucose_level_binned'].value_counts(normalize=True).loc[labels]
+
+        # # Bar chart
+        # fig3 = go.Figure(data=[
+        #     go.Bar(name='No Stroke', x=no_stroke_glucose.index, y=no_stroke_glucose.values, marker_color='lightblue'),
+        #     go.Bar(name='Stroke', x=stroke_glucose.index, y=stroke_glucose.values, marker_color='darkblue')
+        # ])
+
+        # # Update the layout
+        # fig3.update_layout(barmode='group', title_text='Average Glucose Level by Stroke Incidence', 
+        #                     xaxis_title='Average Glucose Level', yaxis_title='Proportion of Patients', 
+        #                     title_x=0, title_font=dict(size=18), 
+        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
+        #                     legend=dict(font=dict(size=14)),
+        #                     autosize=True)
+        # st.plotly_chart(fig3, use_container_width=True)
 
     with col4:
         # Create bins for BMI
