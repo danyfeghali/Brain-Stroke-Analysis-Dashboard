@@ -718,50 +718,6 @@ with tab4:
                             autosize=True)
         st.plotly_chart(fig, use_container_width=True)
 
-
-        # df['bmi_category'] = df['bmi'].apply(lambda x: 'High (>25)' if x >= 25 else 'Low (<25)')
-        # df['stroke_status'] = df['stroke'].map({0: 'No Stroke', 1: 'Stroke'})
-        # # Define bins and labels for glucose level
-        # bins = [0, 90, 110, 125, 140, np.inf]
-        # names = ['(<90)', '(90-110)', '(110-125)', '(125-140)', '(>140)']
-
-        # # Create glucose_category based on average_glucose_level
-        # df['glucose_category'] = pd.cut(df['avg_glucose_level'], bins, labels=names)
-
-        # # Calculate counts of each group
-        # stroke_bmi_glucose_counts = df.groupby(['stroke_status', 'glucose_category', 'bmi_category']).size()
-
-        # # Calculate proportions by dividing by total counts within each 'stroke' group
-        # stroke_bmi_glucose = stroke_bmi_glucose_counts / stroke_bmi_glucose_counts.groupby(level=0).transform(sum)
-
-        # # Reset index
-        # stroke_bmi_glucose = stroke_bmi_glucose.reset_index()
-
-        # # Rename columns for clarity
-        # stroke_bmi_glucose.columns = ['stroke_status', 'glucose_category', 'bmi_category', 'proportion']
-
-        # # Create the plot
-        # fig = px.bar(stroke_bmi_glucose, 
-        #                 x='stroke_status', 
-        #                 y='proportion', 
-        #                 color='glucose_category',
-        #                 facet_row='bmi_category',
-        #                 facet_row_spacing=0.1,
-        #                 labels={'proportion': 'Proportion of Patients', 
-        #                         'stroke_status': 'Stroke Incidence',
-        #                         'glucose_category': 'Glucose Level Category',
-        #                         'bmi_category': 'BMI Category'},
-        #                 title='Proportion of Glucose Level and BMI Category by Stroke Incidence',
-        #                 barmode='group',
-        #                 color_discrete_sequence=px.colors.qualitative.Set1)
-            
-        # fig.update_layout(title_x=0, title_font=dict(size=18), 
-        #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-        #                     legend=dict(font=dict(size=14)),
-        #                     autosize=True)
-        # st.plotly_chart(fig, use_container_width=True)
-
     with st.container():
         st.markdown("<hr style='border: 1px solid black'>", unsafe_allow_html=True)
         st.text("This dashboard was created by Dany El Feghali.")
