@@ -181,11 +181,9 @@ with tab2:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-        residence_mapping = {0: 'Rural', 1: 'Urban'}
-        df['Residence_label'] = df['Residence_type'].map(residence_mapping)
 
         # Calculate proportions for Residence
-        residence_stroke = df.groupby('Residence_label')['stroke'].value_counts(normalize=True).unstack()
+        residence_stroke = df.groupby('Residence_type')['stroke'].value_counts(normalize=True).unstack()
 
         # Bar chart for Residence
         fig2 = go.Figure(data=[
