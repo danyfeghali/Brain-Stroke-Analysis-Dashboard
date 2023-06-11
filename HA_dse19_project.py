@@ -246,67 +246,16 @@ with tab2:
                         autosize=True)
         st.plotly_chart(fig2, use_container_width=True)
 
-
-
-
-
-    # with col3:
-    #     # Group data by marital status and stroke
-    #     marital_status_stroke = df.groupby('stroke')['ever_married'].value_counts(normalize=True).unstack()
-        
-    #     # Bar chart for marital status
-    #     fig1 = go.Figure(data=[
-    #         go.Bar(name='Not Married', x=['No Stroke', 'Stroke'], y=marital_status_stroke['No'].values, marker_color='lightblue'),
-    #         go.Bar(name='Married', x=['No Stroke', 'Stroke'], y=marital_status_stroke['Yes'].values, marker_color='darkblue')
-    #     ])
-
-    #     # Change the bar mode and layout
-    #     fig1.update_layout(barmode='stack', bargroupgap=0.3, title_text='Marital Status by Stroke Incidence', 
-    #                     xaxis_title='Stroke Incidence', yaxis_title='Proportion of Patients', 
-    #                     title_x=0, title_font=dict(size=18), 
-    #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     legend=dict(font=dict(size=14)),
-    #                     autosize=True)
-    #     st.plotly_chart(fig1, use_container_width=True)
-
-    # with col4:
-    #     color_palette = px.colors.qualitative.Set1
-
-    #     # Group data by work type and stroke
-    #     work_type_stroke = df.groupby('stroke')['work_type'].value_counts(normalize=True).unstack()
-
-    #     # Bar chart for work type
-    #     fig2 = go.Figure()
-    #     for idx, work_type in enumerate(work_type_stroke.columns):
-    #         fig2.add_trace(go.Bar(name=work_type, 
-    #                             x=['No Stroke', 'Stroke'], 
-    #                             y=work_type_stroke[work_type].values,
-    #                             marker_color=color_palette[idx % len(color_palette)]))  # Specify color for each work type
-
-    #     fig2.update_layout(barmode='stack', 
-    #                     bargroupgap=0.3, 
-    #                     title_text='Work Type by Stroke Incidence', 
-    #                     xaxis_title='Stroke Incidence', 
-    #                     yaxis_title='Proportion of Patients', 
-    #                     title_x=0, 
-    #                     title_font=dict(size=18), 
-    #                     xaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     yaxis=dict(title_font=dict(size=16), tickfont=dict(size=14)), 
-    #                     legend=dict(font=dict(size=14)),
-    #                     autosize=True)
-    #     st.plotly_chart(fig2, use_container_width=True)
-
     with st.container():
         # Create treemap for smoking status and stroke 
-        proportions_df = df.groupby(['stroke', 'smoking_status']).size().groupby(level=0).apply(lambda x: 100 * x / x.sum()).reset_index(name='proportion')
+        proportions_df = df.groupby(['smoking_status', 'stroke']).size().groupby(level=0).apply(lambda x: 100 * x / x.sum()).reset_index(name='proportion')
 
-        proportions_df.columns = ['stroke', 'smoking_status', 'proportion']       
+        proportions_df.columns = ['smoking_status', 'stroke', 'proportion']       
         proportions_df['values'] = proportions_df['proportion'] # Set 'proportion' as values
 
         proportions_df['stroke'] = proportions_df['stroke'].map({0: 'No Stroke', 1: 'Stroke'})  # Map 0 and 1 to 'No Stroke' and 'Stroke'
 
-        fig = px.treemap(proportions_df, path=['stroke', 'smoking_status'], 
+        fig = px.treemap(proportions_df, path=['smoking_status', 'stroke'], 
                         values='values', 
                         color='proportion',
                         color_continuous_scale=px.colors.qualitative.Set1,  # Change color scale to different shades of blue
