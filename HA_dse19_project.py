@@ -432,7 +432,7 @@ with tab3:
             go.Bar(name='Stroke', x=stroke_proportions.index, y=stroke_proportions.values, marker_color=['darkblue', 'red'], width=0.4)
         ])
 
-        # Remove the legend
+        # Adjust the layout
         fig.update_layout(showlegend=False, bargroupgap=0.3, title_text='Proportion of Stroke and No-Stroke Cases within Selected Conditions', title_x=0, title_font=dict(size=18))
 
         # Display the figure
@@ -586,7 +586,7 @@ with tab4:
         married_df = grouped_df[grouped_df['ever_married']=='Yes']
         not_married_df = grouped_df[grouped_df['ever_married']=='No']
             
-        #Ensure that both dataframes have the same work types
+        # Ensure that both dataframes have the same work types
         married_df = married_df[married_df['work_type'].isin(not_married_df['work_type'])]
         not_married_df = not_married_df[not_married_df['work_type'].isin(married_df['work_type'])]
 
@@ -632,7 +632,7 @@ with tab4:
 
         st.plotly_chart(fig, use_container_width=True)
 
-        # Create two columns
+    # Create two columns
     col5, col6 = st.columns(2)
 
     # Display the figures side by side
